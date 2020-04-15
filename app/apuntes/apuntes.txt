@@ -1,0 +1,30 @@
+*********ESTRUCTURA DE LA APLICACION***************
+
+************NAVIGATION
+Es la barra de navegacion que esta en el footer y posee iconos indicando las pantallas
+
+cuando se situa en uno de los iconos como por ejemplo la primera opcion en la que se estara sera la de My Account
+y esta tiene internamente un archivo llamado 
+
+******AccountStack
+que por dentro posee las pantallas que seran vistas en esa seccion
+
+al igual tenemos:
+
+******RestaurantStack
+******SearchStack
+******TopListStac
+
+que igualmente poseen dentro de si las pantallas mostradas en esa seccion.
+
+
+*******INSTALAMOS ESTE PAQUETE QUE FUNCIONA PARA CUANDO TENEMOS UN FORMULARIO Y AL APARECER EL TECLADO 
+*******LOS INPUTS DEL FORMULARIO NO SEAN TAPADOS
+
+yarn add react-native-keyboard-aware-scroll-view
+https://yarnpkg.com/package/react-native-keyboard-aware-scroll-view
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+    PARA LA IMPORTACION.....
+
+
