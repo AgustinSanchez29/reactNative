@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
+import { ValidateEmail } from "../../utils/Validation"; //in here we import a function that validate email
+import * as firebase from "firebase";
 
 //IN THIS FILE WE CREATE A COMPONENT THAT IT IS A REGISTER FORMULARY
 
@@ -9,16 +11,41 @@ export default function RegisterForm() {
   const [hideRepeatPassword, setHideRepeatPassword] = useState(true); //does the same
 
   //these state variables will be used to manipulate the value of itself
+  /*the structure of these "const" has a variable and a function that it update the value of them */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-  //this function will be used for register a user
-  const register = () => {
-    console.log("Email: " + email);
-    console.log("Password: " + password);
-    console.log("Repeated password: " + repeatPassword);
+  //this function will be used for register a user, it validates if variables are null or false,
+  //in that case, we cant deliver the values
+  const register = async () => {
+    if (!email || !password || !repeatPassword) {
+      console.log("All inputs are required");
+    } else {
+      if (!ValidateEmail(email)) {
+        /* we validate with function imported */
+        console.log("wrong email");
+      } else {
+        if (password !== repeatPassword) {
+          /* we validate if passwords are equals */
+          console.log("passwords must be equals");
+        } else {
+          /* with this function we create a user and save in firebase, it has a "then" and "catch" function
+          for error manage*/
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              console.log("user created");
+            })
+            .catch(() => {
+              console.log("Error to create user, try again later");
+            });
+        }
+      }
+    }
   };
+  /* we call "ValidateEmail" function and we receive the result in a variable */
 
   return (
     <View style={styles.formContainer}>
@@ -28,6 +55,8 @@ export default function RegisterForm() {
         onChange={(e) => setEmail(e.nativeEvent.text)}
         /*whit this line we obtain a variable called "e", it manipulates functions 
         that obtain the current text value written in the text input
+        we use "setEmail" function for update email value
+
          */
 
         rightIcon={
