@@ -3,12 +3,21 @@ import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { ValidateEmail } from "../../utils/Validation"; //in here we import a function that validate email
 import * as firebase from "firebase";
+import { withNavigation } from "react-navigation";
+import Loading from "../Loading";
 
 //IN THIS FILE WE CREATE A COMPONENT THAT IT IS A REGISTER FORMULARY
 
-export default function RegisterForm() {
+function RegisterForm(props) {
+  console.log("REGISTER FORM");
+  console.log(props);
+  /* we receives "props" sended from "Register file" and then we obtains a object with properties of "toast" component*/
+  /* and it obtain "Navigation" propertie for move to another page */
+  const { toastRef, navigation } = props;
   const [hidePassword, setHidePassword] = useState(true); //state variables that will be used to change value of password input
   const [hideRepeatPassword, setHideRepeatPassword] = useState(true); //does the same
+  const [isVisibleLoading, setIsVisibleLoading] = useState(false);
+  /* this constant is for send state of loading */
 
   //these state variables will be used to manipulate the value of itself
   /*the structure of these "const" has a variable and a function that it update the value of them */
@@ -19,31 +28,36 @@ export default function RegisterForm() {
   //this function will be used for register a user, it validates if variables are null or false,
   //in that case, we cant deliver the values
   const register = async () => {
+    setIsVisibleLoading(true);
     if (!email || !password || !repeatPassword) {
-      console.log("All inputs are required");
+      toastRef.current.show("All inputs are required");
     } else {
       if (!ValidateEmail(email)) {
         /* we validate with function imported */
-        console.log("wrong email");
+        toastRef.current.show("wrong email");
       } else {
         if (password !== repeatPassword) {
           /* we validate if passwords are equals */
-          console.log("passwords must be equals");
+          toastRef.current.show("passwords must be equals");
+          /* we access to "current" method and inside it access to "show" method  */
         } else {
           /* with this function we create a user and save in firebase, it has a "then" and "catch" function
-          for error manage*/
+          for error manage, we use "await" for not execute the next steps before ends its steps*/
           await firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
-              console.log("user created");
+              toastRef.current.show("User created");
+              navigation.navigate("Accounts");
+              /* we use this line to move "MyAccount" page then does create a user*/
             })
             .catch(() => {
-              console.log("Error to create user, try again later");
+              toastRef.current.show("Error to create user, try again later");
             });
         }
       }
     }
+    setIsVisibleLoading(false);
   };
   /* we call "ValidateEmail" function and we receive the result in a variable */
 
@@ -108,9 +122,13 @@ export default function RegisterForm() {
         buttonStyle={styles.btnRegister}
         onPress={register} //it call register function
       />
+      <Loading text="Creando cuenta" isVisible={isVisibleLoading} />
     </View>
   );
 }
+
+export default withNavigation(RegisterForm);
+/* we use "withNavigation" to send navigation properties of "RegisterForm" component*/
 
 //STYLES OF EACH FORMULARY ELEMENTS
 
@@ -130,6 +148,7 @@ const styles = StyleSheet.create({
   },
   btnContainerRegister: {
     marginTop: 20,
+    marginLeft: 10,
     width: "95%",
   },
   btnRegister: {

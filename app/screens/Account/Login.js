@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View, ScrollView, Text, Image } from "react-native";
 import { Divider } from "react-native-elements";
+import LoginForm from "../../components/Account/LoginForm";
+import Toast from "react-native-easy-toast";
+import LoginFacebook from "../../components/Account/LoginFacebook";
 import { withNavigation } from "react-navigation"; // esta libreria es para navegar entre paginas
 // {osea te permite redireccionarte hacia otra pagina}
 
-export default function Login(props) {
+function Login(props) {
   //recibimos las propiedades que forman una funcion y utilizaremos
   //navigation para poder redireccionarnos hacia otra pagina
   const { navigation } = props;
-  //console.log(navigation);
+  const toastRef = useRef();
+  console.log("desde LOGIN");
+  console.log(props);
   return (
     <ScrollView>
       <Image
@@ -17,17 +22,20 @@ export default function Login(props) {
         resizeMode="contain"
       />
       <View style={styles.view}>
-        <Text>Form Login...</Text>
-
+        <LoginForm toastRef={toastRef} />
+        {/* LLAMAMOS A LA FUNCION PARA CREAR UNA CUENTA Y COMO PROPS LE PASAMOS EL OBJETO "NAVIGATION" PARA MOVERNOS A OTRA PAGINA*/}
         <CreateAccount navigation={navigation} />
       </View>
       <Divider style={styles.divider} />
       <View style={styles.view}>
-        <Text>Login with facebook</Text>
+        <LoginFacebook toastRef={toastRef} navigation={navigation} />
       </View>
+      <Toast ref={toastRef} position="center" opacity={1} />
     </ScrollView>
   );
 }
+
+export default withNavigation(Login);
 
 //funcion para registro
 const CreateAccount = (props) => {
@@ -40,7 +48,7 @@ const CreateAccount = (props) => {
         onPress={() => navigation.navigate("Register")} //con el objeto navigation utilizamos el metodo "NAVIGATE"
         //para redireccionarnos hacia la pagina Register
       >
-        Resgistrate
+        Registrate
       </Text>
     </Text>
   );

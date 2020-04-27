@@ -3,11 +3,14 @@ import { StyleSheet, View, ScrollView, Text, Image } from "react-native"; //elem
 import { Button } from "react-native-elements";
 import { withNavigation } from "react-navigation";
 function UserGuest(props) {
+  //recibimos los props para utilizar la funcion Navigate
   const { navigation } = props; //uso de destructuring {importamos la funcion}
   console.log(props);
 
   return (
+    /* SrollView es para que si la pantalla es insuficiente se pueda seguir cargando con un scroll*/
     <ScrollView style={styles.viewBody} centerContent={true}>
+      {/* cargamos una imagen */}
       <Image
         source={require("../../../assets/img/original.jpg")}
         style={styles.image}
@@ -15,11 +18,12 @@ function UserGuest(props) {
       ></Image>
       <Text style={styles.title}>Consulta bla bla bla ...</Text>
       <Text style={styles.description}>
-        ¿Como describirias tu mejor restaurante? Busca y visualiza los mejores
-        restaurantes de una forma sencilla, vota cual te ha gustado mas y
-        comenta como ha sido tu experiencia.
+        ¿Como describirias bla bla bla bla bla bla bla bla bla bla bla bla bla
+        bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+        bla bla bla bla bla bla bla bla bla bla bla bla bla bla?
       </Text>
       <View style={styles.viewBtn}>
+        {/* boton para dirigirnos al login */}
         <Button
           buttonStyle={styles.btnStyle}
           containerStyle={styles.btnContainer}

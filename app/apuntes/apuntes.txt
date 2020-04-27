@@ -28,3 +28,19 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
     PARA LA IMPORTACION.....
 
 
+
+
+************** PARA CONFIGURAR EL PROYECTO EN FACEBOOK DEVELOERS PARA EL LOGEO CON FACEBOOK*******
+
+https://developers.facebook.com/apps/853366981812605/settings/basic/
+
+O VERO EL VIDEO GUARDADO EN EL CURSO DE UDEMY
+
+-------
+para enlazar firebase con facebook, es necesario dirigirse: /authentication/sign-in methods/facebook/copy-paste
+app-id && password.
+
+
+
+*****PARA LA CONFIGURACION DE ALMACENAMIENTO DE FIREBASE******
+https://www.udemy.com/course/react-native-expo-creando-mini-tripadvisor-de-restaurantes/learn/lecture/16831684#content

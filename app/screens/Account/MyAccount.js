@@ -22,6 +22,6 @@ export default function MyAccount() {
     // la peticion se esta cargando
     return <Loading isVisible={true} text="Cargando..." />;
   }
-
+  //si el usuario esta logeado carga la pantalla UserLogged sino UserGuest
   return login ? <UserLogged /> : <UserGuest />;
 }
